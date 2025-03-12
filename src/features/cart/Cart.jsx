@@ -2,11 +2,13 @@ import LinkButton from '../../ui/LinkButton';
 import Button from '../../ui/Button';
 import CartItem from './CartItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart } from './cartSlice';
+import { clearCart, getCartItems } from './cartSlice';
+import { getUser } from '../user/userSlice';
+import EmptyCart from './EmptyCart';
 
 function Cart() {
-  const user = useSelector((store) => store.user.username);
-  const cart = useSelector((store) => store.cart.cart);
+  const user = useSelector(getUser);
+  const cart = useSelector(getCartItems);
 
   const dispatch = useDispatch();
 
@@ -17,6 +19,8 @@ function Cart() {
     dispatch(clearCart());
   };
 
+  if(!cart.length) return <EmptyCart />
+
   return (
     <div className="px-3 py-4">
       <LinkButton to="/menu">&larr; Back to menu</LinkButton>
@@ -25,17 +29,12 @@ function Cart() {
         Your cart,<span className="capitalize"> {name}</span>
       </h2>
 
-      {cart.length > 0 ? (
         <ul className="mt-3 divide-y divide-stone-200 border-b">
           {cart.map((item) => (
-            <CartItem key={item.key} item={item} />
+            <CartItem key={item.id} item={item} />
           ))}
         </ul>
-      ) : (
-        <p className="text-'lg' font-bold">Your cart is empty.</p>
-      )}
 
-      {cart.length > 0 && (
         <div className="mt-6 space-x-2">
           <Button btnStyle="primary" to="/order/new">
             Order pizzas
@@ -44,7 +43,6 @@ function Cart() {
             Clear cart
           </Button>
         </div>
-      )}
     </div>
   );
 }

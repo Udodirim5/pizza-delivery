@@ -8,6 +8,7 @@ import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import { createOrder } from '../../services/apiRestaurant';
 import Button from '../../ui/Button';
 import { useSelector } from 'react-redux';
+import { getUser } from '../user/userSlice';
 
 const fakeCart = [
   {
@@ -34,7 +35,7 @@ const fakeCart = [
 ];
 
 function CreateOrder() {
-  const user = useSelector((store) => store.user.username);
+  const user = useSelector(getUser);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
 
