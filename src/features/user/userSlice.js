@@ -24,21 +24,29 @@ async function fetchAddress() {
 
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  username: '',
+// Load user from sessionStorage if available, otherwise use an empty state
+const loadUser = () => {
+  const storedUser = sessionStorage.getItem("user");
+  return storedUser ? JSON.parse(storedUser) : { username: "" };
 };
 
+const initialState = loadUser(); // Load saved user
+
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     updateName(state, action) {
       state.username = action.payload;
+      sessionStorage.setItem("user", JSON.stringify(state)); // Save user
+    },
+    clearUser(state) {
+      state.username = "";
+      sessionStorage.removeItem("user"); // Remove user from sessionStorage
     },
   },
 });
 
-export const { updateName } = userSlice.actions;
+export const { updateName, clearUser } = userSlice.actions;
 export default userSlice.reducer;
-
 export const getUser = (store) => store.user.username

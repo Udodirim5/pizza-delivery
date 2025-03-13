@@ -36,6 +36,7 @@ function CreateUser() {
           placeholder="Your full name"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          autoFocus
           className="input mb-8 w-72"
         />
       )}
