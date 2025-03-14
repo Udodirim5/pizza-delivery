@@ -4,6 +4,6 @@ import eslint from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/pizza-delivery/",
+  base: "/pizza-delivery/", // ✅ Must match repo name
   plugins: [react(), eslint()],
 });
