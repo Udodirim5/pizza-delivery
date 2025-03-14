@@ -134,7 +134,7 @@ function CreateOrder() {
             type="submit"
             btnStyle="primary"
             disabled={
-              isSubmitting || (!position.latitude && !position.longitude)
+              isSubmitting
             }
           >
             {isSubmitting
